@@ -1,0 +1,10 @@
+web:
+  build: ./flaper.api
+  ports:
+   - "80:4000"
+  links:
+   - mongo
+  environment:
+    - NODE_ENV=production
+mongo:
+  image: mongo
