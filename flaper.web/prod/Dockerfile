@@ -12,6 +12,7 @@ RUN  apt-get update && apt-get install -y -q --no-install-recommends \
 WORKDIR /usr/share/nginx/html
 RUN curl -O https://bootstrap.pypa.io/get-pip.py && /usr/bin/python2.7 get-pip.py
 RUN pip install awscli
+COPY default.conf /etc/nginx/conf.d/default.conf
 
 RUN echo "shopt -s expand_aliases" >> ~/.bashrc
 RUN echo "alias s3update=\"aws s3 cp s3://flaper . --region eu-central-1 --recursive --no-sign-request\"" >> ~/.bashrc
