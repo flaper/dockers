@@ -6,7 +6,7 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
 
 
 RUN  apt-get update && apt-get install -y -q --no-install-recommends \
-    git curl npm vim make g++  \
+    git curl npm vim make g++ bzip2 \
      && rm -rf /var/lib/apt/lists/*
 ENV NODE_VERSION 5.0.0
 ENV NVM_DIR /usr/local/nvm
@@ -19,17 +19,20 @@ ENV NODE_DIR $NVM_DIR/versions/node/v$NODE_VERSION
 ENV NODE_PATH $NODE_DIR/lib/node_modules
 ENV PATH      $NODE_DIR/bin:$PATH
 COPY default.conf /etc/nginx/conf.d/default.conf
-RUN    rm /usr/share/nginx/html* -r && echo 1 && \
-    git clone https://github.com/flaper/web.git /usr/share/nginx/html
+
+#echo just to update git cache at docker
+RUN    rm /usr/share/nginx/html* -r && echo 2 > /dev/null && \
+    git clone https://github.com/flaper/web.git --depth 1 /usr/share/nginx/html
 
 #after npm should be ";" as it generate an error when directory not exist
 RUN cd /usr/share/nginx/html && npm install ; \
-    npm install bower tsd -g && bower install --allow-root \
-    && tsd install
+    npm install bower typings -g && bower install --allow-root
 
 WORKDIR /usr/share/nginx/html
 COPY config.local.json  /usr/share/nginx/html/src/app/config/config.local.json
 
 #temp.log workaround to run server constantly
 #after cp should be ";" as it generate an error when directory not exist
-CMD touch /var/log/temp.log && npm run build:prod && nginx && tail -f /var/log/temp.log
+RUN git pull && npm install && npm rebuild && bower install --allow-root && typings install && \
+   npm run build:prod
+CMD touch /var/log/temp.log && nginx && tail -f /var/log/temp.log

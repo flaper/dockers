@@ -1,7 +1,7 @@
 FROM node:5.3
 #we need npm install here to aws micro instance unable to build some libraries (lwip e.g.)
 RUN mkdir /flaper.api && \
-    git clone https://github.com/flaper/api.git /flaper.api && \
+    git clone https://github.com/flaper/api.git /flaper.api --depth 1 && echo 1 > /dev/null && \
     cd /flaper.api && npm install && \
     npm install pm2 -g
 WORKDIR /flaper.api
