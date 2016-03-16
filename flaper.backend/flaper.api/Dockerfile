@@ -3,8 +3,9 @@ FROM node:5.3
 RUN  apt-get update && apt-get install -y -q --no-install-recommends \
     vim zip curl cron\
      && rm -rf /var/lib/apt/lists/*
+#set crontab for current user
+COPY  cron.txt  /var/spool/cron/crontabs/root
 
-COPY  cron.txt  /var/spool/cron/crontabs/`id -u -n` #set crontab for current user
 RUN curl -O https://bootstrap.pypa.io/get-pip.py && /usr/bin/python2.7 get-pip.py
 RUN pip install awscli
 
@@ -15,7 +16,7 @@ RUN mkdir /flaper.api && \
 WORKDIR /flaper.api
 #temp.log workaround to run server constantly
 #after cp should be ";" as it generate an error when directory not exist
-mkdir ~/.aws -p
+RUN mkdir ~/.aws -p
 
 
 CMD git pull && \
