@@ -5,6 +5,8 @@ RUN  apt-get update && apt-get install -y -q --no-install-recommends \
      && rm -rf /var/lib/apt/lists/*
 #set crontab for current user
 COPY  cron.txt  /var/spool/cron/crontabs/root
+#to verify if we need this
+RUN service cron start
 
 RUN curl -O https://bootstrap.pypa.io/get-pip.py && /usr/bin/python2.7 get-pip.py
 RUN pip install awscli
