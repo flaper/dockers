@@ -6,7 +6,7 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
 # allow aliases
 
 RUN  apt-get update && apt-get install -y -q --no-install-recommends \
-    vim python2.7 curl \
+    vim python2.7 curl unzip \
      && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /usr/share/nginx/html
@@ -15,7 +15,7 @@ RUN pip install awscli
 COPY default.conf /etc/nginx/conf.d/default.conf
 
 RUN echo "shopt -s expand_aliases" >> ~/.bashrc
-RUN echo "alias s3update=\"aws s3 cp s3://flaper . --region eu-central-1 --recursive --no-sign-request\"" >> ~/.bashrc
+RUN echo "alias s3update=\"aws s3 cp s3://flaper . --region eu-central-1 --recursive --no-sign-request && unzip -o dist.zip\"" >> ~/.bashrc
 COPY update.sh /root/update.sh
 RUN chmod +x ~/update.sh
 RUN ~/update.sh
