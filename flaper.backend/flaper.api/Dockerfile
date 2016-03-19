@@ -1,7 +1,7 @@
 FROM node:5.3
 #we need npm install here to aws micro instance unable to build some libraries (lwip e.g.)
 RUN  apt-get update && apt-get install -y -q --no-install-recommends \
-    vim zip curl cron\
+    vim zip unzip curl cron\
      && rm -rf /var/lib/apt/lists/*
 #set crontab for current user
 COPY  cron.txt  /var/spool/cron/crontabs/root

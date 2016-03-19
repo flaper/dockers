@@ -5,7 +5,7 @@ RUN npm install pm2 -g
 RUN mkdir /flaper.render && \
     git clone https://github.com/flaper/render.git /flaper.render --depth 1 &&  \
     cd /flaper.render && npm install && \
-    echo 2 > /dev/null
+    echo 3 > /dev/null
 
 WORKDIR /flaper.render
 #temp.log workaround to run server constantly
