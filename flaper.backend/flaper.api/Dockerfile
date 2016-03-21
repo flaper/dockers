@@ -6,7 +6,6 @@ RUN  apt-get update && apt-get install -y -q --no-install-recommends \
 #set crontab for current user
 COPY  cron.txt  /var/spool/cron/crontabs/root
 #to verify if we need this
-RUN service cron start
 
 RUN curl -O https://bootstrap.pypa.io/get-pip.py && /usr/bin/python2.7 get-pip.py
 RUN pip install awscli
@@ -25,4 +24,6 @@ CMD git pull && \
  cp /config/flaper/api/* . -r 2>/dev/null ; \
  cp /config/flaper/views/aws.config ~/.aws/config -r 2>/dev/null ; \
  npm install  && \
- touch /var/log/temp.log && npm run prestart && pm2 start dist/server/server.js && tail -f /var/log/temp.log
+ touch /var/log/temp.log && npm run prestart && pm2 start dist/server/server.js && \
+ service cron start && \
+ tail -f /var/log/temp.log
