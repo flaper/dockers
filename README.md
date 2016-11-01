@@ -12,7 +12,7 @@
 ## Others
 
 #### Render
-`docker run -it --net="host" flaper/render` - starts render on [http://localhost:1337](http://localhost:1337)
+`docker run -it --net="host" flaper/render` - starts render on [http://localhost:1337](http://localhost:1337), , expect host mongo to be available
 
 #### Backend
  `docker pull flaper/backend` - backend
