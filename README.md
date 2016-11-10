@@ -14,5 +14,8 @@
 #### Render
 `docker run -it --net="host" flaper/render` - starts render on [http://localhost:1337](http://localhost:1337), , expect host mongo to be available
 
+#### Elasticsearch
+`docker run -it --net="host" flaper/elasticsearch` - starts es on [http://localhost:9200](http://localhost:9200), , expect host mongo with replica configuration to be available
+
 #### Backend
  `docker pull flaper/backend` - backend
