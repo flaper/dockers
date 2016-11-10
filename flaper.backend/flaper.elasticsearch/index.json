@@ -27,7 +27,7 @@
     }
   },
   "mappings": {
-    "object": {
+    "object2": {
       "properties": {
         "mainDomain": {
           "type": "string"

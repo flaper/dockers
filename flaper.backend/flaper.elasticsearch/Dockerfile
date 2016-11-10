@@ -6,9 +6,11 @@ RUN apt-get update && apt-get install -y -q --no-install-recommends \
     python-pip vim curl\
      && rm -rf /var/lib/apt/lists/*
 RUN pip install mongo-connector elastic2-doc-manager
-COPY index.json  /flaper/index.json
+WORKDIR /flaper/es
+COPY index.json  /flaper/es/index.json
+COPY mongo-connect.config  /flaper/es/mongo-connect.config
 CMD /etc/init.d/elasticsearch start && sleep 20s &&\
-  curl -XPUT localhost:9200/flaper -d @/flaper/index.json --header "Content-Type: application/json" && \
-  mongo-connector -m mongo:27017 -t localhost:9200 -d elastic2_doc_manager && \
+  curl -XPUT localhost:9200/flaper -d @index.json --header "Content-Type: application/json" && \
+  mongo-connector -c mongo-connect.config && \
   touch /var/log/temp.log && tail -f /var/log/temp.log
 
