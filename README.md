@@ -17,5 +17,9 @@
 #### Elasticsearch
 `docker run -it --net="host" flaper/elasticsearch` - starts es on [http://localhost:9200](http://localhost:9200), , expect host mongo with replica configuration to be available
 
+#### Mongo
+Launch mongo with replica config. It uses `/data/db` as store, so check *dbpath* at /etc/mongodb.conf if needed.
+`docker run -v /data/db:/data/db -it --net="host" flaper/mongo`
+
 #### Backend
  `docker pull flaper/backend` - backend
