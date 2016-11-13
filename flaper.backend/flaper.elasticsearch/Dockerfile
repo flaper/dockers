@@ -8,7 +8,8 @@ COPY index.json  index.json
 COPY mongo-connect.config  mongo-connect.config
 RUN sed -i '/sysctl -q -w vm.max_map_count/ s/^#*/true\n#/' /etc/init.d/elasticsearch
 RUN sed -i 's/MAX_OPEN_FILES=.*/MAX_OPEN_FILES=1000/' /etc/init.d/elasticsearch
-RUN sed -i 's/#\?ES_JAVA_OPTS=.*/ES_JAVA_OPTS="-Xms128m -Xmx256m"/' /etc/init.d/elasticsearch
+RUN sed -i 's/#\?ES_JAVA_OPTS=.*/ES_JAVA_OPTS="-Xms256m -Xmx256m"/' /etc/init.d/elasticsearch
+RUN echo "http.host: 0.0.0.0" >> /etc/elasticsearch/elasticsearch.yml
 CMD (chown -R elasticsearch:elasticsearch /var/log/elasticsearch /var/lib/elasticsearch ;\
   /etc/init.d/elasticsearch start && sleep 20s &&\
   curl -XPUT localhost:9200/flaper -d @index.json --header "Content-Type: application/json" && \
