@@ -1,2 +1,3 @@
 #daily
+#m h
 1 0 * * * /flaper.api/scripts/cron/viewsToS3.sh
