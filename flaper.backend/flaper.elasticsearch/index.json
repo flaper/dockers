@@ -28,9 +28,19 @@
   },
   "mappings": {
     "object": {
+      "_source": {
+        "excludes": [
+          "emails"
+        ]
+      },
       "properties": {
+        "region": {
+          "type": "string",
+	  "index": "not_analyzed"
+        },
         "mainDomain": {
-          "type": "string"
+          "type": "string",
+	  "index": "not_analyzed"
         },
         "title": {
           "type": "string"
